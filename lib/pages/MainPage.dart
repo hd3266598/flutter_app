@@ -14,7 +14,7 @@ class MainPage extends StatefulWidget {
 class MainPageState extends State<MainPage> {
   PageController pageController;
   int page = 0;
-  String title = "首页";
+  List titles = ['首页', '商品', '喜欢', '我的'];
 
   @override
   void initState() {
@@ -29,22 +29,6 @@ class MainPageState extends State<MainPage> {
   void onPageChanged(int page) {
     setState(() {
       this.page = page;
-      switch (page) {
-        case 0:
-          this.title = '首页';
-          break;
-        case 1:
-          this.title = '商品';
-          break;
-        case 2:
-          this.title = '喜欢';
-          break;
-        case 3:
-          this.title = '我的';
-          break;
-        default:
-          break;
-      }
     });
   }
 
@@ -54,24 +38,24 @@ class MainPageState extends State<MainPage> {
     list.add(BottomNavigationBarItem(
         backgroundColor: Colors.blue,
         icon: Icon(Icons.home),
-        title: Text('首页')));
+        title: Text(titles[0])));
     list.add(BottomNavigationBarItem(
         backgroundColor: Colors.blue,
         icon: Icon(Icons.shopping_basket),
-        title: Text('商品')));
+        title: Text(titles[1])));
     list.add(BottomNavigationBarItem(
         backgroundColor: Colors.blue,
         icon: Icon(Icons.star),
-        title: Text('喜欢')));
+        title: Text(titles[2])));
     list.add(BottomNavigationBarItem(
         backgroundColor: Colors.blue,
         icon: Icon(Icons.person),
-        title: Text('我的')));
+        title: Text(titles[3])));
 
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text(title),
+        title: Text(titles[page]),
       ),
       body: PageView(
         children: <Widget>[
