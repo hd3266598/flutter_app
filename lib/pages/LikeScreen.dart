@@ -20,7 +20,7 @@ class LikePage extends StatefulWidget {
   }
 }
 
-class _LikeState extends GSYListState<LikePage> {
+class _LikeState extends GSYListState<LikePage> with WidgetsBindingObserver{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,17 +38,52 @@ class _LikeState extends GSYListState<LikePage> {
     );
   }
 
+  _renderEventItem(Event e) {
+//    EventViewModel eventViewModel = EventViewModel.fromEventMap(e);
+//    return new EventItem(
+//      eventViewModel,
+//      onPressed: () {
+//        EventUtils.ActionUtils(context, e, "");
+//      },
+//    );
+  }
+
 
   @override
   void initState() {
+    WidgetsBinding.instance.addObserver(this);
     super.initState();
   }
 
-  @override
-  Future<Null> handleRefresh() async {}
 
   @override
-  Future<Null> onLoadMore() async {}
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+
+  }
+
+
+  @override
+  requestRefresh() {
+
+  }
+
+
+  @override
+  requestLoadMore() {
+
+  }
 
   @override
   bool get isRefreshFirst => true;
