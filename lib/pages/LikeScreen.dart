@@ -1,6 +1,8 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_app/common/model/CommodityListBean.dart';
+import 'package:flutter_app/common/model/Event.dart';
+import 'package:flutter_app/pages/ProductDetail.dart';
+import 'package:flutter_app/widget/GSYCardItem.dart';
 import 'package:flutter_app/widget/GSYListState.dart';
 import 'package:flutter_app/widget/GSYPullLoadWidget.dart';
 
@@ -20,7 +22,7 @@ class LikePage extends StatefulWidget {
   }
 }
 
-class _LikeState extends GSYListState<LikePage> with WidgetsBindingObserver{
+class _LikeState extends GSYListState<LikePage> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,16 +40,11 @@ class _LikeState extends GSYListState<LikePage> with WidgetsBindingObserver{
     );
   }
 
-  _renderEventItem(Event e) {
-//    EventViewModel eventViewModel = EventViewModel.fromEventMap(e);
-//    return new EventItem(
-//      eventViewModel,
-//      onPressed: () {
-//        EventUtils.ActionUtils(context, e, "");
-//      },
-//    );
+  _renderEventItem(CommodityListBean c) {
+    return new ProductEventItem(
+      c,
+    );
   }
-
 
   @override
   void initState() {
@@ -55,13 +52,11 @@ class _LikeState extends GSYListState<LikePage> with WidgetsBindingObserver{
     super.initState();
   }
 
-
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
-
 
   @override
   void didChangeDependencies() {
@@ -69,22 +64,41 @@ class _LikeState extends GSYListState<LikePage> with WidgetsBindingObserver{
   }
 
   @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-
-  }
-
+  void didChangeAppLifecycleState(AppLifecycleState state) {}
 
   @override
   requestRefresh() {
-
+    EventDao.getEventReceived(_getStore(), page: page);
   }
-
 
   @override
   requestLoadMore() {
-
+    EventDao.getEventReceived(_getStore(), page: page);
   }
 
   @override
   bool get isRefreshFirst => true;
+}
+
+class ProductEventItem extends StatelessWidget {
+  final CommodityListBean commodityListBean;
+
+  ProductEventItem(this.commodityListBean);
+
+  @override
+  Widget build(BuildContext context) {
+    return GSYCardItem(
+      child: FlatButton(
+          onPressed: () {
+            Navigator.pushNamed(context, ProductDetailPage.sName);
+          },
+          child: Column(
+            children: <Widget>[
+              Image.network(commodityListBean.thumbnail),
+              Text(commodityListBean.commodityBrandNameEn),
+              Text(commodityListBean.recommendDescription),
+            ],
+          )),
+    );
+  }
 }
