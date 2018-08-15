@@ -55,11 +55,9 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-#   assets:
-#    - icons/ic_main_home.webp
-#    - icons/ic_main_like.webp
-#    - icons/ic_main_mine.webp
-#    - icons/ic_main_product.webp
+  assets:
+    - static/images/logo.png
+    - static/images/welcome.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

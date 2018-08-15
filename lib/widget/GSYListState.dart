@@ -18,13 +18,13 @@ abstract class GSYListState<T extends StatefulWidget> extends State<T>
 
   int page = 1;
 
-  final List dataList = new List();
+  final List dataList = List();
 
   final GSYPullLoadWidgetControl pullLoadWidgetControl =
-      new GSYPullLoadWidgetControl();
+  GSYPullLoadWidgetControl();
 
   final GlobalKey<RefreshIndicatorState> refreshIndicatorKey =
-      new GlobalKey<RefreshIndicatorState>();
+  GlobalKey<RefreshIndicatorState>();
 
   showRefreshLoading() {
     new Future.delayed(const Duration(seconds: 0), () {
@@ -40,11 +40,11 @@ abstract class GSYListState<T extends StatefulWidget> extends State<T>
     isLoading = true;
     page = 1;
     var res = await requestRefresh();
-    if (res != null && res.result) {
+    if (res != null) {
       pullLoadWidgetControl.dataList.clear();
       if (isShow) {
         setState(() {
-          pullLoadWidgetControl.dataList.addAll(res.data);
+          pullLoadWidgetControl.dataList.addAll(res);
         });
       }
     }
@@ -61,10 +61,10 @@ abstract class GSYListState<T extends StatefulWidget> extends State<T>
     isLoading = true;
     page++;
     var res = await requestLoadMore();
-    if (res != null && res.result) {
+    if (res != null) {
       if (isShow) {
         setState(() {
-          pullLoadWidgetControl.dataList.addAll(res.data);
+          pullLoadWidgetControl.dataList.addAll(res);
         });
       }
     }
@@ -77,9 +77,8 @@ abstract class GSYListState<T extends StatefulWidget> extends State<T>
   resolveDataResult(res) {
     if (isShow) {
       setState(() {
-        pullLoadWidgetControl.needLoadMore = (res != null &&
-            res.data != null &&
-            res.data.length == Config.PAGE_SIZE);
+        pullLoadWidgetControl.needLoadMore =
+        (res != null && res.length == Config.PAGE_SIZE);
       });
     }
   }

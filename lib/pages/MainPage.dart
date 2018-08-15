@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/pages/HomeScreen.dart';
-import 'package:flutter_app/pages/ProductScreen.dart';
 import 'package:flutter_app/pages/LikeScreen.dart';
 import 'package:flutter_app/pages/MineScreen.dart';
+import 'package:flutter_app/pages/ProductScreen.dart';
 
 class MainPage extends StatefulWidget {
   @override
