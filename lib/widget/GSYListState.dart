@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_app/common/config/Config.dart';
-import 'package:flutter_app/widget/GSYPullLoadWidget.dart';
+import 'package:flutter_app/widget/control/GSYPullLoadWidgetControl.dart';
 
 /*
  * 上下拉刷新列表的通用State

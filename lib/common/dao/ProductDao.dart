@@ -9,14 +9,12 @@ class ProductDao {
   static getLikeProductListResponse(Store<GSYState> store) async {
     var res = await HttpManager.netFetch(
         Address.getPersonLikeProductList(), null, null, null);
-    if (res != null) {
-      List<CommodityListBean> list = new List();
+    if (res != null && res.result) {
       var likeProductResponseModel =
           LikeProductResponseModel.formJson(res.data);
-      list = likeProductResponseModel.userCollectionCommodityInfoList;
-      print(list.toString());
-      store.dispatch(new RefreshEventAction(list));
-      return list;
+      store.dispatch(new RefreshEventAction(
+          likeProductResponseModel.userCollectionCommodityInfoList));
+      return likeProductResponseModel.userCollectionCommodityInfoList;
     } else {
       return null;
     }

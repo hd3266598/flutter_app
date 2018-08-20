@@ -61,16 +61,14 @@ class HttpManager {
     Dio dio = new Dio();
 
     dio.interceptor.request.onSend = (Options options) {
-      if (Config.DEBUG) {
-        debugPrint('请求方式: ' + options.method);
-        debugPrint('请求url: ' + options.path);
-        debugPrint('请求头: ' + option.headers.toString());
-        if (params != null) {
-          debugPrint('请求参数: ' + params.toString());
-        }
-        if (optionParams["authorizationCode"] != null) {
-          debugPrint('authorizationCode: ' + optionParams["authorizationCode"]);
-        }
+      debugPrint('请求方式: ' + options.method);
+      debugPrint('请求url: ' + options.path);
+      debugPrint('请求头: ' + option.headers.toString());
+      if (params != null) {
+        debugPrint('请求参数: ' + params.toString());
+      }
+      if (optionParams["authorizationCode"] != null) {
+        debugPrint('authorizationCode: ' + optionParams["authorizationCode"]);
       }
       // 在请求被发送之前做一些事情
       return options; //continue
@@ -82,10 +80,8 @@ class HttpManager {
     };
 
     dio.interceptor.response.onSuccess = (Response response) {
-      if (Config.DEBUG) {
-        if (response != null) {
-          debugPrint('返回参数: ' + response.toString());
-        }
+      if (response != null) {
+        debugPrint('返回参数: ' + response.toString());
       }
       // 在返回响应数据之前做一些预处理
       return response; // continue
@@ -93,9 +89,7 @@ class HttpManager {
 
     dio.interceptor.response.onError = (DioError e) {
       // 当请求失败时做一些预处理
-      if (Config.DEBUG) {
-        debugPrint('请求异常: ' + e.toString());
-      }
+      debugPrint('请求异常: ' + e.toString());
       return DioError; //continue
     };
 

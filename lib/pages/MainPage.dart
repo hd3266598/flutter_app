@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/common/dao/ConfigDao.dart';
 import 'package:flutter_app/pages/HomeScreen.dart';
 import 'package:flutter_app/pages/LikeScreen.dart';
 import 'package:flutter_app/pages/MineScreen.dart';
@@ -19,6 +20,7 @@ class MainPageState extends State<MainPage> {
   @override
   void initState() {
     super.initState();
+    ConfigDao.getVenusConfig();
     pageController = PageController(initialPage: this.page);
   }
 

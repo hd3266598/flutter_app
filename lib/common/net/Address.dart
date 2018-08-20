@@ -30,4 +30,8 @@ class Address {
   static getPersonLikeProductList() {
     return "${host}user/commodityCollection/findUserCollectionCommodityInfoList";
   }
+
+  static getVenusConfig() {
+    return "${host}config";
+  }
 }

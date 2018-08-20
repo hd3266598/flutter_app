@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/common/config/Constants.dart';
 import 'package:flutter_app/common/dao/ProductDao.dart';
+import 'package:flutter_app/common/local/LocalStorage.dart';
 import 'package:flutter_app/common/model/LikeProductResponseModel.dart';
 import 'package:flutter_app/common/redux/GSYState.dart';
+import 'package:flutter_app/common/utils/ImageUtils.dart';
 import 'package:flutter_app/pages/ProductDetail.dart';
 import 'package:flutter_app/widget/GSYCardItem.dart';
 import 'package:flutter_app/widget/GSYListState.dart';
@@ -17,8 +20,11 @@ class LikeScreen extends StatefulWidget {
 }
 
 class _LikeState extends GSYListState<LikeScreen> with WidgetsBindingObserver {
+  String res;
+
   @override
   void initState() {
+    _getImageUrl();
     WidgetsBinding.instance.addObserver(this);
     super.initState();
   }
@@ -28,6 +34,7 @@ class _LikeState extends GSYListState<LikeScreen> with WidgetsBindingObserver {
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
+
 
 //  @override
 //  void didChangeDependencies() {
@@ -69,7 +76,7 @@ class _LikeState extends GSYListState<LikeScreen> with WidgetsBindingObserver {
     super.build(context);
     return StoreProvider(
         store: _getStore(),
-        child: GSYPullLoadWidget(
+        child: new GSYPullLoadWidget(
             pullLoadWidgetControl,
                 (BuildContext context, int index) =>
                 _renderEventItem(pullLoadWidgetControl.dataList[index]),
@@ -79,16 +86,21 @@ class _LikeState extends GSYListState<LikeScreen> with WidgetsBindingObserver {
   }
 
   _renderEventItem(CommodityListBean c) {
-    return new ProductEventItem(
-      c,
-    );
+    return new ProductEventItem(c, res);
   }
+
+  _getImageUrl() async {
+    res = await LocalStorage.get(Constants.STAR_RESOURCE_URL_PREFIX);
+    print(res);
+  }
+
 }
 
 class ProductEventItem extends StatelessWidget {
   final CommodityListBean commodityListBean;
+  final String res;
 
-  ProductEventItem(this.commodityListBean);
+  ProductEventItem(this.commodityListBean, this.res);
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +112,7 @@ class ProductEventItem extends StatelessWidget {
           child: Column(
             children: <Widget>[
               Image.network(
-                  'https://resource.starluxe.cn' + commodityListBean.thumbnail),
+                  ImageUtils.getImageUrl(res, commodityListBean.thumbnail)),
               Text(commodityListBean.commodityBrandNameEn),
               Text(commodityListBean.name),
             ],
